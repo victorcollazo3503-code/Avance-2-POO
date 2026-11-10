@@ -1,0 +1,36 @@
+# Importamos las clases desde nuestro módulo modelos.py
+from modelos import PlanEntrenamiento, MiembroGimnasio, MiembroVIP
+
+# ==========================================
+# Instanciación y pruebas
+# ==========================================
+
+print("--- 1. CREANDO PLANES DE ENTRENAMIENTO (COMPOSICIÓN) ---")
+# Creamos las "piezas" que luego inyectaremos en los miembros
+plan_general = PlanEntrenamiento("Acondicionamiento general", 3)
+plan_fuerza = PlanEntrenamiento("Hipertrofia muscular y fuerza", 6)
+plan_clases = PlanEntrenamiento("Clases grupales", 4)
+
+print("\n--- 2. REGISTRO DE USUARIOS ---")
+# Al instanciar, pasamos el OBJETO plan completo, no solo texto
+miembro_base = MiembroGimnasio("Armando", "Mensual", plan_general)
+miembro_vip1 = MiembroVIP("Victor Collazo", plan_fuerza, "Roberto", 5)
+miembro_vip2 = MiembroVIP("Norma", plan_clases, "Ana", 2)
+
+print("\n--- 3. PROBANDO COMPOSICIÓN (Delegación de métodos) ---")
+# Usamos un método del objeto interno (PlanEntrenamiento) a través de la clase principal (Miembro)
+print(f"Rutina asignada a {miembro_vip1.nombre}: {miembro_vip1.plan_entrenamiento.obtener_rutina()}")
+
+print("\n--- 4. PROBANDO ACCESOS Y HERENCIA ---")
+miembro_base.registrar_acceso()
+miembro_vip1.registrar_acceso()
+miembro_vip1.usar_spa()
+
+print("\n--- 5. PROBANDO ENCAPSULAMIENTO ---")
+miembro_base.set_visitas_mes(4)
+print(f"Las visitas de {miembro_base.nombre} se actualizaron a: {miembro_base.get_visitas_mes()} (usando el getter)")
+
+print("\n--- 6. PROBANDO POLIMORFISMO ---")
+print(miembro_base.mostrar_info())
+print(miembro_vip1.mostrar_info())
+print(miembro_vip2.mostrar_info())
